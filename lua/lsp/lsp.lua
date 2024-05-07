@@ -72,6 +72,29 @@ mason_lspconfig.setup_handlers({
 	end,
 })
 
+lsp.emmet_language_server.setup({
+	autostart = false,
+	filetypes = { "html", "vue" }
+})
+
+lsp.ast_grep.setup({
+	on_attach = on_attach,
+	autostart = true,
+	filetypes = { "html" }
+})
+
+lsp.cssls.setup({
+	filetypes = { "css", "scss", "less" },
+	settings = {
+		css = {
+			validate = true,
+			lint = {
+				unknownAtRules = "ignore"
+			}
+		}
+	}
+})
+
 lsp.tsserver.setup({
 	on_attach = on_attach,
 	autostart = true,
