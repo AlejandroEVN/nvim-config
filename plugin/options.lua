@@ -2,6 +2,9 @@ local opt = vim.opt
 local global_opt = vim.go
 local window_opt = vim.wo
 
+-- Cursor mode won't be shown in cmdline
+vim.cmd ":set noshowmode"
+
 -- Set highlight on search
 opt.hlsearch = false
 -- Make line numbers default
@@ -44,13 +47,13 @@ opt.completeopt = "menuone,noselect"
 opt.termguicolors = true
 
 -- A TAB character looks like 4 spaces
-opt.tabstop = 4
+opt.tabstop = 2
 -- Pressing the TAB key will insert spaces instead of a TAB character
 opt.expandtab = true
 -- Number of spaces inserted instead of a TAB character
-opt.softtabstop = 4
+opt.softtabstop = 2
 -- Number of spaces inserted when indenting
-opt.shiftwidth = 4
+opt.shiftwidth = 2
 
 -- Don't insert comment automatically when hitting 'o' or 'O'
 opt.formatoptions:remove("o")

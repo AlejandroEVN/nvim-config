@@ -6,15 +6,36 @@ return {
 				go = { "goimports", "gofmt", "gotests", "golines" },
 				lua = { "lua_ls", "stylua" },
 				python = { "isort", "black" },
-				javascript = { "prettierd", "prettier" },
 				vue = { "prettierd", "prettier" },
 				html = { "prettierd", "prettier" },
+				typescript = { "prettierd" },
+				javascript = { "prettier", "prettierd" },
 			},
-			-- Set up format-on-save
-			format_on_save = { timeout_ms = 500 },
+			format_after_save = {
+				timeout_ms = 5000,
+				async = true,
+			},
+			formatters = {
+				---@type conform.FormatterConfigOverride
+				prettierd = {
+					command = function(self, bufnr)
+						local util = require("conform.util")
+						local fs = require("conform.fs")
+						local cmd =
+							util.find_executable({ "~/.config/nvim/prettier-nvim/bin/prettier.cjs" }, "")(self, bufnr)
+						if cmd ~= "" then
+							return cmd
+						end
+						-- return type of util.from_node_modules is fun(self: conform.FormatterConfig, ctx: conform.Context): string
+						---@diagnostic disable-next-line
+						return util.from_node_modules(fs.is_windows and "prettier.cmd" or "prettier")(self, bufnr)
+					end,
+				},
+			},
 		},
 	},
-	-- Detect tabstop and shiftwidth automatically
+	-- Detect tabstop and shift
+	-- width automatically
 	"tpope/vim-sleuth",
 
 	-- surround.vim
