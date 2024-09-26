@@ -20,6 +20,27 @@ require("lazy").setup({ import = "custom/plugins" }, {
 	},
 })
 
+--[[ vim.api.nvim_cmd({
+	cmd = "!npx prettier",
+	args = {
+		"--no-config",
+		"--stdin-filepath",
+		"%",
+		"--tab-width",
+		"8",
+	},
+}, {}) ]]
+
+local prettier = "%!yarn prettier"
+-- local command = prettier .. " --no-config --stdin-filepath % --tab-width 2 --single-quote --no-semi --print-width 100 --trailing-comma none"
+local command = prettier .. " --stdin-filepath % --write"
+
+vim.api.nvim_create_user_command(
+  "Pret",
+  command,
+  {}
+)
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
@@ -110,4 +131,3 @@ require("ibl").setup({ scope = { highlight = highlight } })
 hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-----[[
