@@ -7,6 +7,7 @@ local getHeight = function(_, _, rows)
 end
 
 local telescope = require("telescope")
+local lga_actions = require("telescope-live-grep-args.actions")
 
 telescope.setup({
 	extensions = {
@@ -17,8 +18,18 @@ telescope.setup({
 			fuzzy = true,
 			override_generic_sorter = true,
 			override_file_sorter = true,
-			case_mode = "smart_case"
-		}
+			case_mode = "smart_case",
+		},
+		live_grep_args = {
+			auto_quoting = true,
+			mappings = {
+				i = {
+					["<C-k>"] = lga_actions.quote_prompt(),
+					["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+					["<C-space>"] = lga_actions.to_fuzzy_refine,
+				},
+			},
+		},
 	},
 })
 
@@ -45,12 +56,9 @@ vim.keymap.set("n", "<leader>sr", apply_layout(builtin.resume), { desc = "[S]ear
 vim.keymap.set("n", "<leader>s.", apply_layout(builtin.oldfiles), { desc = '[S]earch Recent Files ("." for repeat)' })
 vim.keymap.set("n", "<leader><leader>", apply_layout(builtin.buffers), { desc = "[ ] Find existing buffers" })
 vim.keymap.set("n", "<leader>?", apply_layout(builtin.oldfiles), { desc = "[?] Find recently opened files" })
-vim.keymap.set("n", "<leader>sg",
-	apply_layout(telescope.extensions.live_grep_args.live_grep_args),
-	{
-		desc = "[S]earch by [G]rep"
-	}
-)
+vim.keymap.set("n", "<leader>sg", apply_layout(telescope.extensions.live_grep_args.live_grep_args), {
+	desc = "[S]earch by [G]rep",
+})
 
 -- Slightly advanced example of overriding default behavior and theme
 vim.keymap.set("n", "<leader>/", function()
