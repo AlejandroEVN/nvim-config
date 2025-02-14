@@ -45,6 +45,11 @@ local apply_layout = function(fn)
 	end
 end
 
+local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
+
+vim.keymap.set("x", "gs", live_grep_args_shortcuts.grep_visual_selection, { desc = "[G]rep Visual [S]election" })
+vim.keymap.set("n", "gw", live_grep_args_shortcuts.grep_word_under_cursor, { desc = "[G]rep [W]ord Under Cursor" })
+
 vim.keymap.set("n", "<leader>sh", apply_layout(builtin.help_tags), { desc = "[S]earch [H]elp" })
 vim.keymap.set("n", "<leader>sk", apply_layout(builtin.keymaps), { desc = "[S]earch [K]eymaps" })
 vim.keymap.set("n", "<leader>sf", apply_layout(builtin.find_files), { desc = "[S]earch [F]iles" })
