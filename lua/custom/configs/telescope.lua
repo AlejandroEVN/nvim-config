@@ -31,9 +31,12 @@ telescope.setup({
 			},
 		},
 	},
-	layout_config = {
-		width = getWidth,
-		height = getHeight
+	defaults = {
+		layout_strategy = 'vertical',
+		layout_config = {
+			width = getWidth,
+			height = getHeight
+		}
 	}
 })
 
@@ -72,10 +75,14 @@ vim.keymap.set("n", "<leader>sg", (telescope.extensions.live_grep_args.live_grep
 -- Slightly advanced example of overriding default behavior and theme
 vim.keymap.set("n", "<leader>/", function()
 	-- You can pass additional configuration to Telescope to change the theme, layout, etc.
-	builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-		winblend = 10,
-		previewer = false,
-	}))
+	builtin.current_buffer_fuzzy_find({
+		layout_strategy = 'horizontal',
+		layout_config = {
+			width = getWidth,
+			height = getHeight,
+			preview_width = 0
+		}
+	})
 end, { desc = "[/] Fuzzily search in current buffer" })
 
 -- It's also possible to pass additional configuration options.
