@@ -29,7 +29,7 @@ require("lazy").setup({
 	"tpope/vim-sleuth",
 
 	-- surround.vim
-	"tpope/vim-surround",
+	{ "tpope/vim-surround", lazy = true },
 
 	-- auto-pairs
 	"cohama/lexima.vim",
