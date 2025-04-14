@@ -11,8 +11,9 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open float
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Open [D]iagnostics [L]ist" })
 
 -- Quickfix keymaps
-vim.keymap.set("n", "]q", "<cmd>cnext<CR>", { desc = "[Q]uickfix next" })
-vim.keymap.set("n", "[q", "<cmd>cprev<CR>", { desc = "[Q]uickfix previous" })
+vim.keymap.set("n", "]q", "<cmd>cnext<CR>", { noremap = true, silent = true , desc = "[Q]uickfix next" })
+vim.keymap.set("n", "[q", "<cmd>cprev<CR>", { noremap = true, silent = true , desc = "[Q]uickfix previous" })
+vim.keymap.set('n', '<leader>q', ':copen<CR>', { noremap = true, silent = true, desc = "Open [Q]uickfix"})
 
 -- Terminal
 vim.keymap.set("t", "<esc>", "<C-\\><C-N>", { desc = "[T]erminal normal" })
@@ -22,7 +23,3 @@ vim.keymap.set("n", "<leader>yp", function()
 	vim.cmd('let @" = expand("%")')
 end, { desc = "[Y]ank file [P]ath" })
 
--- Buffers
-vim.keymap.set("n", "<leader>q", function()
-	vim.cmd("bd")
-end, { desc = "[Q]uit buffer" })

@@ -9,7 +9,9 @@ return {
 				vue = { "prettierd", "prettier" },
 				html = { "prettierd", "prettier" },
 				typescript = { "prettierd" },
+				typescriptreact = { "prettierd" },
 				javascript = { "prettier", "prettierd" },
+				json = { "jq" },
 			},
 			format_after_save = {
 				timeout_ms = 5000,

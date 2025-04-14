@@ -37,7 +37,7 @@ telescope.setup({
 			width = getWidth,
 			height = getHeight
 		}
-	}
+	},
 })
 
 pcall(telescope.load_extension, "fzf")
@@ -45,12 +45,6 @@ pcall(telescope.load_extension, "ui-select")
 pcall(telescope.load_extension, "live_grep_args")
 
 local builtin = require("telescope.builtin")
-
-local apply_layout = function(fn)
-	return function()
-		fn({ layout_config = { width = getWidth, height = getHeight } })
-	end
-end
 
 local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
 
