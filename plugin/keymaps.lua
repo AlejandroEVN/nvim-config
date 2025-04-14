@@ -14,6 +14,9 @@ vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Open [D]i
 vim.keymap.set("n", "]q", "<cmd>cnext<CR>", { desc = "[Q]uickfix next" })
 vim.keymap.set("n", "[q", "<cmd>cprev<CR>", { desc = "[Q]uickfix previous" })
 
+-- Terminal
+vim.keymap.set("t", "<esc>", "<C-\\><C-N>", { desc = "[T]erminal normal" })
+
 -- Copy path
 vim.keymap.set("n", "<leader>yp", function()
 	vim.cmd('let @" = expand("%")')
