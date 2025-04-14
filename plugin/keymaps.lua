@@ -10,6 +10,10 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnos
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Open [D]iagnostics [L]ist" })
 
+-- Quickfix keymaps
+vim.keymap.set("n", "]q", "<cmd>cnext<CR>", { desc = "[Q]uickfix next" })
+vim.keymap.set("n", "[q", "<cmd>cprev<CR>", { desc = "[Q]uickfix previous" })
+
 -- Copy path
 vim.keymap.set("n", "<leader>yp", function()
 	vim.cmd('let @" = expand("%")')
