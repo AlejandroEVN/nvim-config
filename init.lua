@@ -19,7 +19,6 @@ require("lazy").setup({ import = "custom/plugins" }, {
 		notify = false,
 	},
 })
-
 --[[ vim.api.nvim_cmd({
 	cmd = "!npx prettier",
 	args = {
@@ -35,11 +34,7 @@ local prettier = "%!yarn prettier"
 -- local command = prettier .. " --no-config --stdin-filepath % --tab-width 2 --single-quote --no-semi --print-width 100 --trailing-comma none"
 local command = prettier .. " --stdin-filepath % --write"
 
-vim.api.nvim_create_user_command(
-  "Pret",
-  command,
-  {}
-)
+vim.api.nvim_create_user_command("Pret", command, {})
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

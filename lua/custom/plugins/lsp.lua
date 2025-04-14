@@ -5,7 +5,6 @@ return {
 		-- LSP Configuration & Plugins
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			"neovim/nvim-lspconfig",
 			-- Automatically install LSPs to stdpath for neovim
 			{
 				"williamboman/mason.nvim",
@@ -29,6 +28,29 @@ return {
 		},
 		config = function()
 			require("custom.configs.typescript-tools")
+		end,
+	},
+	{
+		"neovim/nvim-lspconfig",
+		opts = function()
+			local ret = {
+				servers = {
+					rust_analyzer = {
+						mason = false,
+						settings = function() end,
+					},
+				},
+				---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
+				setup = {
+					rust_analyzer = function()
+						return true
+					end,
+				},
+			}
+			return ret
+		end,
+		config = function()
+			require("custom.configs.lsp")
 		end,
 	},
 }

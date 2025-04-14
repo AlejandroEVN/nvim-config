@@ -10,6 +10,8 @@ return {
 				html = { "prettierd", "prettier" },
 				typescript = { "prettierd" },
 				javascript = { "prettier", "prettierd" },
+				rust = { "rustfmt", lsp_format = "fallback" },
+				sql = { "sqlfmt", lsp_format = "fallback" },
 			},
 			format_after_save = {
 				timeout_ms = 5000,

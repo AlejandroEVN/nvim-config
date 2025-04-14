@@ -61,10 +61,12 @@ require("typescript-tools").setup({
 local mason_lspconfig = require("mason-lspconfig")
 
 local servers = {
-	-- clangd = {},
+	clangd = {
+		autostart = true,
+		filetypes = { "c", "h" },
+	},
 	-- gopls = {},
 	-- pyright = {},
-	-- rust_analyzer = {},
 	emmet_language_server = {
 		autostart = false,
 		filetypes = { "html", "vue" },
@@ -124,30 +126,11 @@ mason_lspconfig.setup_handlers({
 	["rust_analyzer"] = function() end,
 })
 
-lspconfig.rust_analyzer.setup({
-	on_attach = on_attach,
-	settings = {
-		["rust-analyzer"] = {
-			imports = {
-				granularity = {
-					group = "module",
-				},
-				prefix = "self",
-			},
-			cargo = {
-				buildScripts = {
-					enable = true,
-				},
-			},
-			procMacro = {
-				enable = true,
-			},
+vim.g.rustaceanvim = function()
+	return {
+		-- other rustacean settings. --
+		server = {
+			on_attach = on_attach,
 		},
-	},
-})
-
-lspconfig.rust_analyzer.setup({
-	on_attach = function(_, bufnr)
-		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-	end,
-})
+	}
+end
