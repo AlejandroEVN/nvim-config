@@ -35,13 +35,8 @@ telescope.setup({
 		layout_strategy = "vertical",
 		layout_config = {
 			width = getWidth,
-<<<<<<< Updated upstream
 			height = getHeight
 		}
-=======
-			height = getHeight,
-		},
->>>>>>> Stashed changes
 	},
 })
 
