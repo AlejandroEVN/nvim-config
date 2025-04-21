@@ -9,9 +9,11 @@ return {
 				vue = { "prettierd", "prettier" },
 				html = { "prettierd", "prettier" },
 				typescript = { "prettierd" },
+				typescriptreact = { "prettierd" },
 				javascript = { "prettier", "prettierd" },
 				rust = { "rustfmt", lsp_format = "fallback" },
 				sql = { "sqlfmt", lsp_format = "fallback" },
+				json = { "jq" },
 			},
 			format_after_save = {
 				timeout_ms = 5000,

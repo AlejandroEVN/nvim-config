@@ -10,9 +10,13 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnos
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Open [D]iagnostics [L]ist" })
 
--- Quickfix
-vim.keymap.set("n", "]q", "<cmd>cnext<CR>")
-vim.keymap.set("n", "[q", "<cmd>cprev<CR>")
+-- Quickfix 
+vim.keymap.set("n", "]q", "<cmd>cnext<CR>", { noremap = true, silent = true, desc = "[Q]uickfix next" })
+vim.keymap.set("n", "[q", "<cmd>cprev<CR>", { noremap = true, silent = true, desc = "[Q]uickfix previous" })
+vim.keymap.set("n", "<leader>q", ":copen<CR>", { noremap = true, silent = true, desc = "Open [Q]uickfix" })
+
+-- Oil
+vim.keymap.set("n", "-", "<cmd>Oil<CR>", { noremap = true, silent = true, desc = "Open Oil in CWD" })
 
 -- Terminal
 vim.keymap.set("t", "<esc>", "<C-\\><C-N>", { desc = "[T]erminal normal" })
@@ -21,8 +25,3 @@ vim.keymap.set("t", "<esc>", "<C-\\><C-N>", { desc = "[T]erminal normal" })
 vim.keymap.set("n", "<leader>yp", function()
 	vim.cmd('let @" = expand("%")')
 end, { desc = "[Y]ank file [P]ath" })
-
--- Buffers
-vim.keymap.set("n", "<leader>q", function()
-	vim.cmd("bd")
-end, { desc = "[Q]uit buffer" })
