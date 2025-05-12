@@ -14,27 +14,12 @@ return {
 				rust = { "rustfmt", lsp_format = "fallback" },
 				sql = { "sqlfmt", lsp_format = "fallback" },
 				json = { "jq" },
+				astro = { "prettier" },
+				svelte = { "prettier" },
 			},
 			format_after_save = {
 				timeout_ms = 5000,
 				async = true,
-			},
-			formatters = {
-				---@type conform.FormatterConfigOverride
-				prettierd = {
-					command = function(self, bufnr)
-						local util = require("conform.util")
-						local fs = require("conform.fs")
-						local cmd =
-							util.find_executable({ "~/.config/nvim/prettier-nvim/bin/prettier.cjs" }, "")(self, bufnr)
-						if cmd ~= "" then
-							return cmd
-						end
-						-- return type of util.from_node_modules is fun(self: conform.FormatterConfig, ctx: conform.Context): string
-						---@diagnostic disable-next-line
-						return util.from_node_modules(fs.is_windows and "prettier.cmd" or "prettier")(self, bufnr)
-					end,
-				},
 			},
 		},
 	},
