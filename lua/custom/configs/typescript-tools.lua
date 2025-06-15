@@ -67,6 +67,14 @@ local servers = {
 	-- gopls = {},
 	-- pyright = {},
 	-- rust_analyzer = {},
+	eslint = {
+		autostart = false,
+		filetypes = { "ts", "js", "tsx" },
+	},
+	prismals = {
+		autostart = false,
+		filetypes = { "prisma" },
+	},
 	emmet_language_server = {
 		autostart = false,
 		filetypes = { "html", "vue" },
@@ -118,6 +126,10 @@ mason_lspconfig.setup_handlers({
 			autostart = (servers[server_name] or {}).autostart,
 		})
 	end,
+})
+
+require('lspconfig').eslint.setup({
+	cmd = { 'vscode-eslint-language-server', '--stdio' }
 })
 
 local tstools_api = require("typescript-tools.api")
