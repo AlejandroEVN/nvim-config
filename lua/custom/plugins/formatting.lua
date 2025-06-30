@@ -23,8 +23,10 @@ return {
 					command = function(self, bufnr)
 						local util = require("conform.util")
 						local fs = require("conform.fs")
-						local cmd =
-							util.find_executable({ "~/.config/nvim/prettier-nvim/bin/prettier.cjs" }, "")(self, bufnr)
+						local cmd = util.find_executable({ "~/.config/nvim/utils/prettier-nvim/bin/prettier.cjs" }, "")(
+							self,
+							bufnr
+						)
 						if cmd ~= "" then
 							return cmd
 						end

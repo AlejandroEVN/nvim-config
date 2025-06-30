@@ -128,8 +128,8 @@ mason_lspconfig.setup_handlers({
 	end,
 })
 
-require('lspconfig').eslint.setup({
-	cmd = { 'vscode-eslint-language-server', '--stdio' }
+require("lspconfig").eslint.setup({
+	cmd = { "vscode-eslint-language-server", "--stdio" },
 })
 
 local tstools_api = require("typescript-tools.api")
