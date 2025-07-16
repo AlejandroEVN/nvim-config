@@ -10,7 +10,7 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnos
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Open [D]iagnostics [L]ist" })
 
--- Quickfix 
+-- Quickfix
 vim.keymap.set("n", "]q", "<cmd>cnext<CR>", { noremap = true, silent = true, desc = "[Q]uickfix next" })
 vim.keymap.set("n", "[q", "<cmd>cprev<CR>", { noremap = true, silent = true, desc = "[Q]uickfix previous" })
 vim.keymap.set("n", "<leader>q", ":copen<CR>", { noremap = true, silent = true, desc = "Open [Q]uickfix" })
@@ -25,3 +25,7 @@ vim.keymap.set("t", "<esc>", "<C-\\><C-N>", { desc = "[T]erminal normal" })
 vim.keymap.set("n", "<leader>yp", function()
 	vim.cmd('let @" = expand("%")')
 end, { desc = "[Y]ank file [P]ath" })
+
+-- Page scroll
+vim.keymap.set("n", "<C-d>", "8jzz", { desc = "Center cursor after moving down half-page" })
+vim.keymap.set("n", "<C-u>", "8kzz", { desc = "Center cursor after moving up half-page" })
