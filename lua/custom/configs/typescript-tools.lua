@@ -64,7 +64,7 @@ local mason_lspconfig = require("mason-lspconfig")
 
 local servers = {
 	-- clangd = {},
-	-- gopls = {},
+	gopls = { autostart = false, filetypes = { "go" } },
 	-- pyright = {},
 	-- rust_analyzer = {},
 	eslint = {
