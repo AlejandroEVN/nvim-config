@@ -113,20 +113,19 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 mason_lspconfig.setup({
 	ensure_installed = vim.tbl_keys(servers),
+	automatic_enable = true
 })
 
-mason_lspconfig.setup_handlers({
-	function(server_name)
-		require("lspconfig")[server_name].setup({
+for server_name, config in pairs(servers) do
+	vim.lsp.config[server_name] = {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = (servers[server_name] or {}).settings,
 			root_dir = (servers[server_name] or {}).root_dir,
 			filetypes = (servers[server_name] or {}).filetypes,
 			autostart = (servers[server_name] or {}).autostart,
-		})
-	end,
-})
+	}
+end
 
 require("lspconfig").eslint.setup({
 	cmd = { "vscode-eslint-language-server", "--stdio" },
