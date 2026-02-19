@@ -1,8 +1,14 @@
 return {
-    "tpope/vim-fugitive",
-    "tpope/vim-rhubarb",
-    {
-		-- Adds git related signs to the gutter, as well as utilities for managing changes
+	{
+		"tpope/vim-fugitive",
+		config = function()
+			vim.keymap.set("n", "<leader>go", function()
+				vim.cmd(":Git")
+			end, { desc = "[G]it [O]pen" })
+		end,
+	},
+	"tpope/vim-rhubarb",
+	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
 			-- See `:help gitsigns.txt`
@@ -14,6 +20,7 @@ return {
 				changedelete = { text = "~" },
 			},
 			on_attach = function(bufnr)
+				vim.keymap.set("n", "<leader>gb", require("gitsigns").blame, { buffer = bufnr, desc = "[G]it [B]lame" })
 				vim.keymap.set(
 					"n",
 					"<leader>gp",

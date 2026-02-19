@@ -14,6 +14,9 @@ end
 
 local builtin = require("telescope.builtin")
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
 local on_attach = function(_, bufnr)
 	local nmap = function(keys, func, desc)
 		if desc then
@@ -108,22 +111,19 @@ local servers = {
 	},
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
 mason_lspconfig.setup({
 	ensure_installed = vim.tbl_keys(servers),
-	automatic_enable = true
+	automatic_enable = true,
 })
 
 for server_name, config in pairs(servers) do
 	vim.lsp.config[server_name] = {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			settings = (servers[server_name] or {}).settings,
-			root_dir = (servers[server_name] or {}).root_dir,
-			filetypes = (servers[server_name] or {}).filetypes,
-			autostart = (servers[server_name] or {}).autostart,
+		capabilities = capabilities,
+		on_attach = on_attach,
+		settings = (servers[server_name] or {}).settings,
+		root_dir = (servers[server_name] or {}).root_dir,
+		filetypes = (servers[server_name] or {}).filetypes,
+		autostart = (servers[server_name] or {}).autostart,
 	}
 end
 
@@ -148,3 +148,14 @@ end, { desc = "[T]sTools [R]emove [U]nused" })
 vim.keymap.set("n", "<leader>tgs", function()
 	tstools_api.go_to_source_definition(false)
 end, { desc = "[T]sTools [G]o to [S]ource" })
+
+local cmp = require("cmp")
+cmp.setup({
+	mapping = {
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
+	},
+	sources = {
+		{ name = "nvim_lsp" },
+	},
+})
