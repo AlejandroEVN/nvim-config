@@ -36,6 +36,9 @@ telescope.setup({
 		layout_config = {
 			width = getWidth,
 			height = getHeight
+		},
+		preview = {
+			treesitter = false
 		}
 	},
 })

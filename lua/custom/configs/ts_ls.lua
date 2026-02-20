@@ -17,18 +17,18 @@ local builtin = require("telescope.builtin")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
+	client.server_capabilities.semanticTokensProvider = nil
+
 	local nmap = function(keys, func, desc)
 		if desc then
 			desc = "LSP: " .. desc
 		end
-
 		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 	end
 
 	nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 	nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-
 	nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
 	nmap("gr", function()
 		return builtin.lsp_references({ show_line = false })
@@ -37,12 +37,10 @@ local on_attach = function(_, bufnr)
 	nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
 	nmap("<leader>ds", apply_layout(builtin.lsp_document_symbols), "[D]ocument [S]ymbols")
 	nmap("<leader>ws", apply_layout(builtin.lsp_dynamic_workspace_symbols), "[W]orkspace [S]ymbols")
-
-	-- See `:help K` for why this keymap
-	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+	nmap("K", function()
+		vim.lsp.buf.hover({ border = "rounded", max_width = 80, max_height = 20 })
+	end, "Hover Documentation")
 	nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
-
-	-- Lesser used LSP functionality
 	nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 	nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
 	nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
@@ -50,35 +48,24 @@ local on_attach = function(_, bufnr)
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, "[W]orkspace [L]ist Folders")
 
-	-- Create a command `:Format` local to the LSP buffer
 	vim.api.nvim_buf_create_user_command(bufnr, "LspFormat", function(_)
 		vim.lsp.buf.format()
 	end, { desc = "Format current buffer with LSP" })
 end
 
--- require("neodev").setup()
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-	vim.lsp.handlers.hover, {
-		border = "rounded",
-		padding = { 1, 2 },
-	}
-)
-vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#ffffff" }) 
-
-require("typescript-tools").setup({
-	on_attach = on_attach,
-})
-
 local mason_lspconfig = require("mason-lspconfig")
 
 local servers = {
-	-- clangd = {},
+	ts_ls = {
+		filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
+	},
 	gopls = { autostart = false, filetypes = { "go" } },
-	-- pyright = {},
-	-- rust_analyzer = {},
 	eslint = {
 		autostart = true,
 		filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
+		settings = {
+			nodePath = ".yarn/sdks/eslint",
+		},
 	},
 	prismals = {
 		autostart = false,
@@ -117,6 +104,22 @@ local servers = {
 	},
 }
 
+local orig_hover = vim.lsp.handlers.hover
+vim.lsp.handlers.hover = function(err, result, ctx, config)
+	if result and result.contents then
+		if type(result.contents) == "table" and result.contents.value then
+			local pad_x = "  "
+			local pad_y = "\n"
+			local lines = {}
+			for line in result.contents.value:gmatch("([^\n]*)\n?") do
+				table.insert(lines, pad_x .. line)
+			end
+			result.contents.value = pad_y .. table.concat(lines, "\n") .. pad_y
+		end
+	end
+	orig_hover(err, result, ctx, config)
+end
+
 mason_lspconfig.setup({
 	ensure_installed = vim.tbl_keys(servers),
 	automatic_enable = true,
@@ -129,31 +132,9 @@ for server_name, _ in pairs(servers) do
 		settings = (servers[server_name] or {}).settings,
 		root_dir = (servers[server_name] or {}).root_dir,
 		filetypes = (servers[server_name] or {}).filetypes,
-		autostart = (servers[server_name] or {}).autostart
+		autostart = (servers[server_name] or {}).autostart,
 	})
 end
-
--- vim.lsp.config.eslint.setup({
--- 	cmd = { "vscode-eslint-language-server", "--stdio" },
--- })
-
-local tstools_api = require("typescript-tools.api")
-
-vim.keymap.set("n", "<leader>toi", function()
-	tstools_api.organize_imports(true)
-end, { desc = "[T]sTools [O]rganise [I]mports" })
-vim.keymap.set("n", "<leader>tam", function()
-	tstools_api.add_missing_imports(true)
-end, { desc = "[T]sTools [A]dd [M]issing imports" })
-vim.keymap.set("n", "<leader>trf", function()
-	tstools_api.rename_file(false)
-end, { desc = "[T]sTools [R]ename [F]ile" })
-vim.keymap.set("n", "<leader>tru", function()
-	tstools_api.remove_unused_imports(false)
-end, { desc = "[T]sTools [R]emove [U]nused" })
-vim.keymap.set("n", "<leader>tgs", function()
-	tstools_api.go_to_source_definition(false)
-end, { desc = "[T]sTools [G]o to [S]ource" })
 
 local cmp = require("cmp")
 cmp.setup({
@@ -165,4 +146,3 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 	},
 })
-

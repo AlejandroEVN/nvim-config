@@ -21,27 +21,6 @@ require("lazy").setup({ import = "custom/plugins" }, {
 	},
 })
 
---[[ vim.api.nvim_cmd({
-	cmd = "!npx prettier",
-	args = {
-		"--no-config",
-		"--stdin-filepath",
-		"%",
-		"--tab-width",
-		"8",
-	},
-}, {}) ]]
-
-local prettier = "%!yarn prettier"
--- local command = prettier .. " --no-config --stdin-filepath % --tab-width 2 --single-quote --no-semi --print-width 100 --trailing-comma none"
-local command = prettier .. " --stdin-filepath % --write"
-
-vim.api.nvim_create_user_command(
-  "Pret",
-  command,
-  {}
-)
-
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
@@ -55,7 +34,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
-require("nvim-treesitter.configs").setup({})
+require("nvim-treesitter.config").setup({})
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
