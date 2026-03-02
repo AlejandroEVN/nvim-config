@@ -9,6 +9,10 @@ local servers = {
 	-- tsserver = {},
 	-- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
+	prismals = {
+		autostart = true,
+		filetypes = { "prisma" },
+	},
 	lua_ls = {
 		Lua = {
 			workspace = { checkThirdParty = false },
@@ -74,13 +78,13 @@ mason_lspconfig.setup_handlers({
 
 lsp.emmet_language_server.setup({
 	autostart = false,
-	filetypes = { "html", "vue" }
+	filetypes = { "html", "vue" },
 })
 
 lsp.ast_grep.setup({
 	on_attach = on_attach,
 	autostart = true,
-	filetypes = { "html" }
+	filetypes = { "html" },
 })
 
 lsp.cssls.setup({
@@ -89,10 +93,10 @@ lsp.cssls.setup({
 		css = {
 			validate = true,
 			lint = {
-				unknownAtRules = "ignore"
-			}
-		}
-	}
+				unknownAtRules = "ignore",
+			},
+		},
+	},
 })
 
 lsp.tsserver.setup({
@@ -110,6 +114,6 @@ lsp.tsserver.setup({
 		"javascriptreact",
 		"javascript.jsx",
 		"typescriptreact",
-		"typescript.tsx"
+		"typescript.tsx",
 	},
 })

@@ -27,6 +27,24 @@ local on_attach = function(client, bufnr)
 		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 	end
 
+	nmap("<leader>ru", function()
+		vim.lsp.buf.code_action({
+			apply = true,
+			context = {
+				only = { "source.removeUnusedImports.ts" },
+				diagnostics = {},
+			},
+		})
+	end, "[R]emove [U]nused Imports")
+	nmap("<leader>ai", function()
+		vim.lsp.buf.code_action({
+			apply = true,
+			context = {
+				only = { "source.addMissingImports.ts" },
+				diagnostics = {},
+			},
+		})
+	end, "[A]dd [M]issing Imports")
 	nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 	nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 	nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
@@ -135,14 +153,3 @@ for server_name, _ in pairs(servers) do
 		autostart = (servers[server_name] or {}).autostart,
 	})
 end
-
-local cmp = require("cmp")
-cmp.setup({
-	mapping = {
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
-	},
-	sources = {
-		{ name = "nvim_lsp" },
-	},
-})
