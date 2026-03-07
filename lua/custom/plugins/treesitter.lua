@@ -7,6 +7,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		lazy = false,
 		build = ":TSUpdate",
+		tag = "v0.10.0",
 		opts = {
 			ensure_installed = {
 				"typescript",

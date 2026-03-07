@@ -74,9 +74,9 @@ end
 local mason_lspconfig = require("mason-lspconfig")
 
 local servers = {
-	ts_ls = {
-		filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
-	},
+	-- tsserver = {
+	-- 	filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
+	-- },
 	gopls = { autostart = false, filetypes = { "go" } },
 	eslint = {
 		autostart = true,
