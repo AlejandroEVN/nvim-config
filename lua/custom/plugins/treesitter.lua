@@ -7,7 +7,8 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		lazy = false,
 		build = ":TSUpdate",
-		tag = "v0.10.0",
+		tag = "0.10.0",
+		pin = true,
 		opts = {
 			ensure_installed = {
 				"typescript",
@@ -17,7 +18,7 @@ return {
 				"html",
 				"css",
 				"markdown",
-				"markdown_inline",
+				"prisma",
 			},
 			auto_install = false,
 			highlight = { enable = true },
