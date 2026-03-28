@@ -8,9 +8,9 @@ return {
 				python = { "isort", "black" },
 				vue = { "prettierd", "prettier" },
 				html = { "prettierd", "prettier" },
-				typescript = { "prettierd" },
-				typescriptreact = { "prettierd" },
-				javascript = { "prettier", "prettierd" },
+				typescript = { "oxfmt" },
+				typescriptreact = { "oxfmt" },
+				javascript = { "oxfmt" },
 				json = { "jq" },
 			},
 			format_after_save = {
