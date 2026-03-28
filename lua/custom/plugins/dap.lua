@@ -77,7 +77,7 @@ return {
 			local dap = require("dap")
 
 			-- Register the adapter directly (no bridge plugin needed)
-			local js_debug_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug/out/src/dapDebugServer.js"
+			local js_debug_path = vim.fn.stdpath("config") .. "/dap/vscode-js-debug/out/src/dapDebugServer.js"
 			dap.adapters["pwa-node"] = {
 				type = "server",
 				host = "localhost",
@@ -112,7 +112,32 @@ return {
 					return existing_port
 				end
 
-				vim.fn.system(string.format("ato debugger %s 2>/dev/null", service:gsub("^ms%-", "")))
+				local manifest = string.format(
+					[[
+						apiVersion: v1
+						kind: Service
+						metadata:
+						  name: %s
+						  namespace: atom-core
+						spec:
+						  type: NodePort
+						  selector:
+							app: %s
+						  ports:
+							- name: nodejs-debug
+							  protocol: TCP
+							  port: 9229
+							  targetPort: 9229
+				]],
+					svc_name,
+					service
+				)
+
+				local apply_result = vim.fn.system("kubectl apply -f - <<'EOF'\n" .. manifest .. "EOF")
+				if vim.v.shell_error ~= 0 then
+					vim.notify("Failed to create debug service: " .. apply_result, vim.log.levels.ERROR)
+					return nil
+				end
 
 				local result =
 					vim.fn.system(string.format("kubectl get svc %s -o jsonpath='{.spec.ports[0].nodePort}'", svc_name))
