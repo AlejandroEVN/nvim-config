@@ -77,7 +77,7 @@ return {
 			local dap = require("dap")
 
 			-- Register the adapter directly (no bridge plugin needed)
-			local js_debug_path = vim.fn.stdpath("config") .. "/dap/vscode-js-debug/out/src/dapDebugServer.js"
+			local js_debug_path = vim.fn.stdpath("config") .. "/dap/js-debug/src/dapDebugServer.js"
 			dap.adapters["pwa-node"] = {
 				type = "server",
 				host = "localhost",
