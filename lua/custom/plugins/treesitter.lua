@@ -15,18 +15,19 @@ return {
 					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 				end,
 			})
-
-			local ensure_installed =
-				{ "lua", "python", "typescript", "c", "vim", "vimdoc", "query", "prisma", "markdown" }
-			local installed = require("nvim-treesitter.config").get_installed()
-			local to_install = vim.iter(ensure_installed)
-				:filter(function(parser)
-					return not vim.tbl_contains(installed, parser)
-				end)
-				:totable()
-			if #to_install > 0 then
-				require("nvim-treesitter").install(to_install)
-			end
 		end,
+		-- config = function()
+		-- 	local ensure_installed =
+		-- 		{ "lua", "python", "typescript", "c", "vim", "vimdoc", "query", "prisma", "markdown" }
+		-- 	local installed = require("nvim-treesitter.config").get_installed()
+		-- 	local to_install = vim.iter(ensure_installed)
+		-- 		:filter(function(parser)
+		-- 			return not vim.tbl_contains(installed, parser)
+		-- 		end)
+		-- 		:totable()
+		-- 	if #to_install > 0 then
+		-- 		require("nvim-treesitter").install(to_install)
+		-- 	end
+		-- end,
 	},
 }
