@@ -73,12 +73,29 @@ end
 
 local mason_lspconfig = require("mason-lspconfig")
 
+local tools = {
+	"stylua",
+	"jq",
+	"oxfmt",
+}
+
+local mr = require("mason-registry")
+
+local tools = { "jq", "stylua", "oxfmt" }
+
+for _, tool in ipairs(tools) do
+	local ok, pkg = pcall(mr.get_package, tool)
+	if ok and not pkg:is_installed() then
+		pkg:install()
+	end
+end
+
 local servers = {
 	-- tsserver = {
 	-- 	filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
 	-- },
 	gopls = { autostart = false, filetypes = { "go" } },
-	eslint = {
+	oxlint = {
 		autostart = true,
 		filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
 		settings = {
@@ -107,6 +124,9 @@ local servers = {
 	ast_grep = {
 		autostart = true,
 		filetypes = { "html" },
+	},
+	ts_ls = {
+		filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
 	},
 	html = { filetypes = { "html", "twig", "hbs" } },
 	lua_ls = {

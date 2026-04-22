@@ -4,12 +4,6 @@ return {
 		dependencies = {
 			{
 				"williamboman/mason.nvim",
-				ensure_installed = {
-					"eslint_d",
-					"stylua",
-					"jq",
-					"prettierd",
-				},
 				config = true,
 				lazy = false,
 			},
