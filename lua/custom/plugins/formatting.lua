@@ -12,6 +12,8 @@ return {
 				typescriptreact = { "oxfmt" },
 				javascript = { "oxfmt" },
 				json = { "jq" },
+				rust = { "rustfmt" },
+				toml = { "tombi" },
 			},
 			format_after_save = {
 				timeout_ms = 5000,

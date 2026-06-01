@@ -73,12 +73,6 @@ end
 
 local mason_lspconfig = require("mason-lspconfig")
 
-local tools = {
-	"stylua",
-	"jq",
-	"oxfmt",
-}
-
 local mr = require("mason-registry")
 
 local tools = { "jq", "stylua", "oxfmt" }
@@ -137,6 +131,17 @@ local servers = {
 					globals = { "vim", "require", "pcall", "pairs" },
 				},
 				telemetry = { enable = false },
+			},
+		},
+	},
+	rust_analyzer = {
+		filetypes = { "rust" },
+		autostart = true,
+		settings = {
+			["rust-analyzer"] = {
+				check = {
+					command = "clippy",
+				},
 			},
 		},
 	},
